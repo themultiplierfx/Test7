@@ -1,0 +1,72 @@
+from pathlib import Path
+
+src = Path("/mnt/data/TMFX_V4_6_4_WHATSAPP_BROWN_DISCLAIMER.html")
+html = src.read_text(encoding="utf-8")
+
+# 1) Make the top signature/message a lighter, outside-the-box text block,
+#    sized to roughly 75% of the center card.
+html = html.replace(
+    '.sigBox{max-width:650px;width:100%;margin:12px auto;background:#0f172a;border:1.5px solid #334155;border-radius:16px;padding:22px 16px;text-align:center}',
+    '.sigBox{max-width:487px;width:75%;margin:8px auto 34px auto;background:transparent;border:0;border-radius:0;padding:6px 4px;text-align:center}'
+)
+
+# If the original CSS differs, target the existing sigBox rule more generally.
+if '.sigBox{max-width:487px' not in html:
+    import re
+    html = re.sub(
+        r'\.sigBox\{[^}]*\}',
+        '.sigBox{max-width:487px;width:75%;margin:8px auto 34px auto;background:transparent;border:0;border-radius:0;padding:6px 4px;text-align:center}',
+        html,
+        count=1
+    )
+
+# Remove the visual "box" from the top message itself and make the WhatsApp
+# line plain text while preserving the WhatsApp click action.
+html = html.replace(
+    '<div style="color:#fbbf24;font-weight:900;font-size:15px">TMFX V4.6.4 - FULL VERSION</div>',
+    '<div style="color:#fbbf24;font-weight:900;font-size:14px">TMFX V4.6.4 - FULL VERSION</div>'
+)
+
+# Replace the WhatsApp button with plain clickable text starting "CLICK HERE FOR..."
+import re
+html = re.sub(
+    r'<button onclick="window\.open\(\'https://wa\.me/2349118119077\',\'_blank\'\)"[^>]*>📱 WhatsApp VIP Access - Global \$15 \| NG N5k</button>',
+    '<div onclick="window.open(\'https://wa.me/2349118119077\',\'_blank\')" style="color:#94a3b8;font-size:12px;font-weight:900;margin-top:12px;cursor:pointer;text-decoration:underline">CLICK HERE FOR WHATSAPP VIP ACCESS</div>',
+    html,
+    count=1
+)
+
+# 2) Referral should be ~75% width and clearly separated from center, not at foot.
+html = html.replace(
+    'max-width:650px;width:100%;margin:30px auto 10px auto;text-align:center;padding:16px;',
+    'max-width:487px;width:75%;margin:42px auto 0 auto;text-align:center;padding:10px;',
+    1
+)
+html = html.replace(
+    'max-width:650px;width:100%;margin:30px auto 20px auto;padding:0;background:#78350f;',
+    'max-width:487px;width:75%;margin:20px auto 24px auto;padding:0;background:transparent;',
+    1
+)
+
+# 3) Replace the disclaimer box entirely with a simple plain-text disclaimer.
+old_disc_start = '<div class="footer" id="disclaimerFooter"'
+start = html.find(old_disc_start)
+if start == -1:
+    raise RuntimeError("Disclaimer footer not found.")
+
+end = html.find('</div>\n\n<script>', start)
+if end == -1:
+    raise RuntimeError("Could not locate disclaimer footer end.")
+
+# Keep a plain text disclaimer, no expandable box/error-style UI.
+plain_disc = '''<div id="disclaimerFooter" style="max-width:487px;width:75%;margin:20px auto 24px auto;padding:0 4px;background:transparent;border:0;border-radius:0;color:#a8b3c2;font-size:9px;line-height:1.5;text-align:center">
+TMFX Calculator is for educational purposes only. Trade responsibly. 5% reserved for spread, 95% used for trade.
+</div>'''
+
+html = html[:start] + plain_disc + html[end+6:]  # consume the closing </div>
+
+# 4) Keep the referral/disclaimer hidden after login as the existing app logic
+#    expects, but ensure the first-page versions are compact and not "footer" styled.
+out = Path("/mnt/data/TMFX_V4_6_4_75_PERCENT_FRONT_LAYOUT.html")
+out.write_text(html, encoding="utf-8")
+print(out)
