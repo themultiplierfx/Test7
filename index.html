@@ -1,72 +1,455 @@
-from pathlib import Path
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TMFX V4.6.4 - FULL VERSION</title>
+<style>
+*{box-sizing:border-box;font-family:Arial}
+body{margin:0;padding:10px 10px 100px;background:#020b1a;display:flex;flex-direction:column;align-items:center;min-height:100vh}
+.card{background:#0a1a2e;border:1px solid #1e3a5f;border-radius:12px;padding:12px;width:100%;max-width:650px;margin:auto}
+label{font-size:8.5px;color:#7aa3c7;display:block;margin-top:6px;font-weight:700}
+input,select,textarea{width:100%;background:#061a33;border:1px solid #1a3a5a;color:#fff;padding:12px;border-radius:8px;margin-top:3px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btnRed,.btnBlue,.btnGold,.btnGreen,.btnWhats{width:100%;padding:12px;border-radius:8px;font-weight:900;cursor:pointer;margin-top:8px}
+.btnRed{background:#dc2626;color:#fff;border:0;padding:14px;margin-top:12px}
+.btnBlue{background:#0f2d5a;color:#60a5fa;border:2px solid #3b82f6}
+.btnGold{background:#fbbf24;color:#000;border:0;padding:14px}
+.btnBrown{background:#78350f!important;color:#fbbf24!important;border:2px solid #92400e!important}
+.btnGreen{background:#052e16;color:#22c55e;border:2px solid #22c55e}
+.btnWhats{background:#128c7e;color:#fff;border:0}
+.hlBox{border:1px solid #1e3a5f;border-radius:10px;padding:12px;margin-top:12px;background:#081428}
+.lotBox{background:#0d2818;border:2px solid #22c55e;border-radius:10px;padding:12px;margin-top:12px}
+.hidden{display:none!important}
+table{width:100%;border-collapse:collapse;margin-top:16px}
+td{border:1px solid #000;padding:10px;text-align:center;font-size:11px;font-weight:700}
+.red{background:#dc2626;color:#fff;font-size:18px;font-weight:900}.dark{background:#0a0a0a;color:#fff}.gray{background:#2a2f3a;color:#fff}
+.r{background:#2e1f0a;color:#ffcc80}.p{background:#000;color:#fff}.s{background:#1a2a0a;color:#c5ff80}
+.resultHead{background:#fbbf24;color:#000;font-weight:900;font-size:12px;border:2px solid #fbbf24}
+.yellowCell{background:#000!important;color:#facc15!important;font-size:13px;font-weight:900;border:2px solid #fbbf24!important}
+.greenCell{background:#000!important;color:#22c55e!important;font-size:13px;font-weight:900;border:2px solid #22c55e!important}
+.lotHighlight{background:#000!important;color:#60a5fa!important;font-size:16px!important;border:2px solid #3b82f6!important}
+.profitHighlight{background:#000!important;color:#4ade80!important;font-size:16px!important;border:2px solid #22c55e!important}
+#apiStatus{font-size:10px;text-align:center;margin-top:8px;font-weight:900;padding:6px;border-radius:6px}
+.footer,.historyBox{width:100%;max-width:650px}
+.footer{text-align:center;margin:15px auto 20px;padding:20px;background:#081428;border:1px solid #1e3a5f;border-radius:12px;color:#7aa3c7;font-size:11px}
+.tradeInfo{background:#000;border:2px solid #fbbf24;border-radius:8px;padding:12px;margin-bottom:12px;text-align:center;color:#fbbf24;font-weight:900;font-size:12px}
+.historyBox{border:2px solid #fbbf24;background:#1a1500;border-radius:12px;padding:14px;margin-top:12px}
+.histItem{background:#081428;border:1px solid #1e3a5f;border-radius:8px;padding:10px;margin-top:8px}
+.histItem b{color:#fbbf24;font-size:11px;display:block}.histItem span{color:#fff;font-size:10px;display:block;margin-top:4px}
+.histBtns{display:flex;gap:6px;margin-top:8px}.histBtns button{flex:1;padding:10px;border-radius:6px;border:0;font-size:10px;font-weight:900;cursor:pointer}
+.sigBox{max-width:487px;width:75%;margin:8px auto 34px;background:transparent;padding:6px 4px;text-align:center}
+.backBtn{width:100%;background:#1a0a0a;color:#fca5a5;border:2px solid #dc2626;padding:11px;border-radius:8px;margin-top:8px;font-weight:900;cursor:pointer}
+</style>
+</head>
+<body>
 
-src = Path("/mnt/data/TMFX_V4_6_4_WHATSAPP_BROWN_DISCLAIMER.html")
-html = src.read_text(encoding="utf-8")
+<div class="sigBox" id="signatureFront">
+<div style="color:#fbbf24;font-weight:900;font-size:18px">👋 Welcome</div>
+<div onclick="window.open('https://wa.me/2349118119077','_blank')" style="color:#128c7e;font-size:13px;font-weight:900;margin-top:10px;cursor:pointer;text-decoration:underline">📲 Chat with us on WhatsApp</div>
+<div style="font-size:10px;color:#94a3b8;margin-top:14px;line-height:1.6;text-align:left;background:#081428;border:1px solid #1e3a5f;border-radius:8px;padding:10px">
+<b style="color:#7aa3c7">ABOUT THIS TOOL:</b> Traders normally work out R/S levels and lot size by hand — slow and easy to get wrong, especially across different pairs. This calculator automates that math using live market data, so you get to your numbers faster. It's free for traders who register through our partner link. It doesn't place trades or manage funds — it only calculates; how you use the numbers is entirely your decision.
+</div>
+</div>
 
-# 1) Make the top signature/message a lighter, outside-the-box text block,
-#    sized to roughly 75% of the center card.
-html = html.replace(
-    '.sigBox{max-width:650px;width:100%;margin:12px auto;background:#0f172a;border:1.5px solid #334155;border-radius:16px;padding:22px 16px;text-align:center}',
-    '.sigBox{max-width:487px;width:75%;margin:8px auto 34px auto;background:transparent;border:0;border-radius:0;padding:6px 4px;text-align:center}'
-)
+<div class="card" id="mainCard">
 
-# If the original CSS differs, target the existing sigBox rule more generally.
-if '.sigBox{max-width:487px' not in html:
-    import re
-    html = re.sub(
-        r'\.sigBox\{[^}]*\}',
-        '.sigBox{max-width:487px;width:75%;margin:8px auto 34px auto;background:transparent;border:0;border-radius:0;padding:6px 4px;text-align:center}',
-        html,
-        count=1
-    )
+<div id="box0" class="hlBox" style="border:2px solid #fbbf24;background:#1a1500">
+<b style="color:#fbbf24;font-size:11px">ENTER YOUR ID</b>
+<div style="margin-top:8px">
+<label>TRADER ID</label>
+<div style="position:relative">
+<input id="traderId" type="password" placeholder="••••" autocomplete="new-password" style="border:2px solid #fbbf24;letter-spacing:6px;font-size:18px;padding-right:50px">
+<span onclick="togglePass()" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;color:#fbbf24;font-size:18px">👁️</span>
+</div>
+</div>
+<label style="display:flex;gap:8px;align-items:start;margin-top:12px;background:#000;padding:10px;border-radius:6px;border:2px solid #fbbf24">
+<input type="checkbox" id="agreeTerms" style="width:18px;height:18px;margin-top:2px">
+<span style="font-size:10px;color:#fbbf24;line-height:1.4;font-weight:900">I have read the About and Disclaimer above. I understand this is a calculator only — not financial or trading advice — and that all trading decisions and outcomes are my own responsibility.</span>
+</label>
+<button type="button" onclick="unlockNowSimple()" style="width:100%;background:#1a1500;color:#fbbf24;border:2px solid #fbbf24;padding:14px;border-radius:8px;font-weight:900;margin-top:12px;cursor:pointer;letter-spacing:1px">CONTINUE</button>
+<div id="vipStatus" style="text-align:center;font-size:11px;margin-top:8px;color:#7aa3c7;font-weight:800"></div>
+</div>
 
-# Remove the visual "box" from the top message itself and make the WhatsApp
-# line plain text while preserving the WhatsApp click action.
-html = html.replace(
-    '<div style="color:#fbbf24;font-weight:900;font-size:15px">TMFX V4.6.4 - FULL VERSION</div>',
-    '<div style="color:#fbbf24;font-weight:900;font-size:14px">TMFX V4.6.4 - FULL VERSION</div>'
-)
+<div id="box1" class="hlBox hidden">
+<b style="color:#fbbf24;font-size:11px">BOX 1: SELECT PAIR</b>
+<div class="g2" style="margin-top:8px">
+<div>
+<label>SELECTED PAIR</label>
+<select id="pairD" onchange="selectPair(this.value)">
+<option>GOLD</option><option>XAUUSD</option><option>SILVER</option><option>XAGUSD</option><option>XPDUSD</option><option>XPTUSD</option>
+<option>BTCUSD</option><option>ETHUSD</option><option>SOLUSD</option><option selected>EURUSD</option><option>GBPUSD</option><option>AUDUSD</option><option>NZDUSD</option>
+<option>USDJPY</option><option>USDCAD</option><option>USDCHF</option><option>EURJPY</option><option>GBPJPY</option><option>EURGBP</option><option>EURAUD</option>
+<option>GBPAUD</option><option>EURCAD</option><option>GBPCAD</option><option>AUDCAD</option><option>AUDJPY</option><option>NZDJPY</option>
+<option>CADJPY</option><option>CHFJPY</option><option>EURCHF</option><option>GBPCHF</option><option>EURNZD</option><option>GBPNZD</option><option>AUDNZD</option><option>NZDCAD</option>
+</select>
+</div>
+<div>
+<label>MODE</label>
+<select id="modeD" onchange="changeMode()" style="background:#1a1500;color:#fbbf24;font-weight:900;border:2px solid #fbbf24">
+<option value="auto" selected>AUTO ⚡</option><option value="manual">MANUAL</option>
+</select>
+</div>
+</div>
+<div id="apiStatus" style="background:#052e16;border:1px solid #22c55e;color:#22c55e">● READY ⚡</div>
+<div style="font-size:9px;color:#7aa3c7;margin-top:8px;line-height:1.5;background:#081428;border:1px dashed #1e3a5f;border-radius:6px;padding:8px">⚠️ AUTO pulls live prices from a third-party data feed — always confirm the High/Low/Close and current price against your own broker's live chart before you trade. Prefer to enter your own numbers? Switch MODE to MANUAL above.</div>
+<button class="btnGold" style="background:#1a1500;color:#fbbf24;border:2px solid #fbbf24;margin-top:12px" onclick="showHLCBox()">📊 SHOW HLC - MARKET DATA →</button>
+<button class="backBtn" onclick="backToBox0()">← BACK</button>
+</div>
 
-# Replace the WhatsApp button with plain clickable text starting "CLICK HERE FOR..."
-import re
-html = re.sub(
-    r'<button onclick="window\.open\(\'https://wa\.me/2349118119077\',\'_blank\'\)"[^>]*>📱 WhatsApp VIP Access - Global \$15 \| NG N5k</button>',
-    '<div onclick="window.open(\'https://wa.me/2349118119077\',\'_blank\')" style="color:#94a3b8;font-size:12px;font-weight:900;margin-top:12px;cursor:pointer;text-decoration:underline">CLICK HERE FOR WHATSAPP VIP ACCESS</div>',
-    html,
-    count=1
-)
+<div id="box2" class="hlBox hidden">
+<b style="color:#fbbf24;font-size:11px">BOX 2: MARKET DATA (HLC)</b>
+<div class="g3" style="margin-top:6px">
+<div><label>DAILY HIGH</label><input id="dh" type="number"></div><div><label>DAILY LOW</label><input id="dl" type="number"></div><div><label>DAILY CLOSE</label><input id="dc" type="number"></div>
+</div>
+<div class="g3" style="margin-top:6px">
+<div><label>WEEKLY HIGH</label><input id="wh" type="number"></div><div><label>WEEKLY LOW</label><input id="wl" type="number"></div><div><label>WEEKLY CLOSE</label><input id="wc" type="number"></div>
+</div>
+<button class="btnBlue" onclick="calcHLCOnly()">CALCULATE HLC → SHOW R/S</button>
+<button class="backBtn" onclick="backToBox1()">← BACK TO BOX 1</button>
+</div>
 
-# 2) Referral should be ~75% width and clearly separated from center, not at foot.
-html = html.replace(
-    'max-width:650px;width:100%;margin:30px auto 10px auto;text-align:center;padding:16px;',
-    'max-width:487px;width:75%;margin:42px auto 0 auto;text-align:center;padding:10px;',
-    1
-)
-html = html.replace(
-    'max-width:650px;width:100%;margin:30px auto 20px auto;padding:0;background:#78350f;',
-    'max-width:487px;width:75%;margin:20px auto 24px auto;padding:0;background:transparent;',
-    1
-)
+<div id="box3" class="hlBox hidden">
+<div id="tradeInfoBox" class="tradeInfo hidden"></div>
+<b style="color:#fbbf24;font-size:11px">BOX 3: R/S LEVELS</b>
+<table>
+<tr><td colspan="3" class="red" id="pName">EURUSD</td></tr>
+<tr><td class="dark"></td><td class="gray">DAILY</td><td class="gray">WEEKLY</td></tr>
+<tr><td class="r">R5</td><td class="r" id="dR5">-</td><td class="r" id="wR5">-</td></tr>
+<tr><td class="r">R4</td><td class="r" id="dR4">-</td><td class="r" id="wR4">-</td></tr>
+<tr><td class="r">R3</td><td class="r" id="dR3">-</td><td class="r" id="wR3">-</td></tr>
+<tr><td class="r">R2</td><td class="r" id="dR2">-</td><td class="r" id="wR2">-</td></tr>
+<tr><td class="r">R1</td><td class="r" id="dR1">-</td><td class="r" id="wR1">-</td></tr>
+<tr><td class="p">P</td><td class="p" id="dP">-</td><td class="p" id="wP">-</td></tr>
+<tr><td class="s">S1</td><td class="s" id="dS1">-</td><td class="s" id="wS1">-</td></tr>
+<tr><td class="s">S2</td><td class="s" id="dS2">-</td><td class="s" id="wS2">-</td></tr>
+<tr><td class="s">S3</td><td class="s" id="dS3">-</td><td class="s" id="wS3">-</td></tr>
+<tr><td class="s">S4</td><td class="s" id="dS4">-</td><td class="s" id="wS4">-</td></tr>
+<tr><td class="s">S5</td><td class="s" id="dS5">-</td><td class="s" id="wS5">-</td></tr>
+</table>
+</div>
 
-# 3) Replace the disclaimer box entirely with a simple plain-text disclaimer.
-old_disc_start = '<div class="footer" id="disclaimerFooter"'
-start = html.find(old_disc_start)
-if start == -1:
-    raise RuntimeError("Disclaimer footer not found.")
+<!-- MERGED BOX 4 -->
+<div id="box4" class="hlBox hidden" style="border-color:#60a5fa">
+<b style="color:#60a5fa;font-size:11px">BOX 4: TRADE SETUP + SAFE LOT</b>
 
-end = html.find('</div>\n\n<script>', start)
-if end == -1:
-    raise RuntimeError("Could not locate disclaimer footer end.")
+<div style="margin-top:8px">
+<label style="color:#22c55e">CURRENT PRICE *REQUIRED</label>
+<input id="cpD" type="number" style="border:2px solid #22c55e;background:#052e16" placeholder="Current Price">
+</div>
 
-# Keep a plain text disclaimer, no expandable box/error-style UI.
-plain_disc = '''<div id="disclaimerFooter" style="max-width:487px;width:75%;margin:20px auto 24px auto;padding:0 4px;background:transparent;border:0;border-radius:0;color:#a8b3c2;font-size:9px;line-height:1.5;text-align:center">
-TMFX Calculator is for educational purposes only. Trade responsibly. 5% reserved for spread, 95% used for trade.
-</div>'''
+<div class="g2" style="margin-top:10px">
+<div><label>SL - Next R/S Line</label><input id="slD" type="number" placeholder="Next line"></div>
+<div><label>TP - Next R/S Line</label><input id="tpD" type="number" placeholder="Next line"></div>
+</div>
 
-html = html[:start] + plain_disc + html[end+6:]  # consume the closing </div>
+<div style="margin-top:12px">
+<label style="color:#fbbf24">BALANCE + $/¢ *REQUIRED</label>
+<div style="display:flex;gap:6px">
+<input id="balInput" type="number" placeholder="Enter Balance" style="flex:2;border:2px solid #fbbf24" oninput="calcBalance()">
+<select id="balType" onchange="calcBalance()" style="flex:1;background:#1a1500;color:#fbbf24;font-weight:900;border:2px solid #fbbf24">
+<option value="" disabled selected>SELECT</option><option value="dollar">Dollar $</option><option value="cent">Cent ¢</option>
+</select>
+</div>
+<div id="balShow" style="text-align:center;font-size:11px;color:#fff;margin-top:8px;font-weight:800;background:#1a1500;padding:6px;border-radius:6px;border:1px dashed #fbbf24">⚠️ Enter balance</div>
+</div>
 
-# 4) Keep the referral/disclaimer hidden after login as the existing app logic
-#    expects, but ensure the first-page versions are compact and not "footer" styled.
-out = Path("/mnt/data/TMFX_V4_6_4_75_PERCENT_FRONT_LAYOUT.html")
-out.write_text(html, encoding="utf-8")
-print(out)
+<button class="btnRed" onclick="doCalculate()">CALCULATE LOT & PROFIT → SHOW RESULT</button>
+<button class="btnBlue" onclick="backToBox3()">← BACK TO BOX 3</button>
+</div>
+
+<!-- OLD BOX 6, NOW DISPLAYED AS BOX 5; INTERNAL ID RETAINED -->
+<div id="box6" class="hlBox hidden" style="border-color:#fbbf24;background:#000">
+<b style="color:#fbbf24;font-size:11px">BOX 5: APPROVAL / LOT / PROFIT</b>
+
+<table>
+<tr><td class="resultHead" style="background:#000;color:#fbbf24">RESULT</td><td class="resultHead" style="background:#000;color:#fbbf24">Dollar</td><td class="resultHead" style="background:#000;color:#fbbf24">Cent</td></tr>
+<tr><td class="resultHead" style="background:#000;color:#22c55e;border:2px solid #22c55e">BALANCE</td><td class="greenCell" id="balD">-</td><td class="greenCell" id="balC">-</td></tr>
+<tr><td class="resultHead" style="background:#000;color:#fbbf24;border:2px solid #fbbf24">SPREAD RESERVE (5%)</td><td class="yellowCell" id="appD">-</td><td class="yellowCell" id="appC">-</td></tr>
+<tr><td class="resultHead" style="background:#000;color:#60a5fa;border:2px solid #3b82f6">LOT SIZE ⭐</td><td class="lotHighlight yellowCell" id="lotD">-</td><td class="lotHighlight yellowCell" id="lotC">-</td></tr>
+<tr><td class="resultHead" style="background:#000;color:#4ade80;border:2px solid #22c55e">PROFIT 💰</td><td class="profitHighlight yellowCell" id="profD">-</td><td class="profitHighlight yellowCell" id="profC">-</td></tr>
+<tr><td class="resultHead" style="background:#000;color:#fbbf24;border:2px solid #fbbf24">TOTAL<br><span style="font-size:8px">100% Bal + Profit</span></td><td class="resultHead" id="totD" style="background:#000;color:#facc15;border:2px solid #fbbf24">-</td><td class="resultHead" id="totC" style="background:#000;color:#facc15;border:2px solid #fbbf24">-</td></tr>
+</table>
+
+<div style="text-align:center;font-size:9px;color:#fbbf24;margin-top:8px;font-weight:800;background:#1a1500;padding:6px;border-radius:4px;border:1px dashed #fbbf24">ℹ️ Lot size is calculated on 95% of balance (5% reserved as a spread buffer). TOTAL = 100% Bal + Profit. Figures are estimates for your own decision-making — not trading advice.</div>
+
+<button class="btnGreen" onclick="saveAndShowOnlyHistory()">💾 Save and Share</button>
+<button class="btnBlue" onclick="doReset()">RESET</button>
+<button class="btnBlue" style="background:#1a0a0a;border-color:#dc2626;color:#fca5a5;margin-top:8px;font-size:10px" onclick="logoutDevice()">🚪 LOGOUT DEVICE</button>
+</div>
+</div>
+
+<div id="box7" class="historyBox hidden">
+<div style="text-align:center;color:#fbbf24;font-weight:900;font-size:14px">📚 SAVED HISTORY</div>
+<div id="historyList" style="margin-top:12px"></div>
+<button class="btnGold btnBrown" style="margin-top:14px" onclick="backToCalculator()">🔄 BACK TO CALCULATOR</button>
+<button class="btnRed" style="background:#7f1d1d;margin-top:8px" onclick="clearHistoryAndLogout()">🗑️ CLEAR ALL</button>
+<button class="btnBlue" style="background:#1a0a0a;border-color:#dc2626;color:#fca5a5;margin-top:8px;font-size:10px" onclick="logoutDevice()">🚪 LOGOUT DEVICE</button>
+</div>
+
+<div class="footer" id="referralFooter" style="border:2px solid #22c55e;background:#052e16;max-width:487px;width:75%;margin:42px auto 0;padding:10px">
+<b style="color:#22c55e;font-size:13px;display:block">Referral Center</b>
+<div style="font-size:9px;color:#a8b3c2;margin-top:8px;line-height:1.6">
+<b style="color:#fbbf24">DISCLAIMER:</b> This app is a calculator only. It performs arithmetic based on figures you enter (balance, price, stop loss, take profit) and does not place trades, manage funds, or act on your behalf. It does not provide financial, investment, or trading advice, and nothing in this app should be treated as a recommendation to buy, sell, or hold any instrument.<br><br>
+All trading decisions — including whether, when, and how much to trade — are made solely by you. Trading forex, metals, crypto, and CFDs carries a high risk of loss and may not be suitable for all traders; past results calculated here do not guarantee future outcomes. Lot and profit figures are estimates based on the numbers entered and current market conditions may differ. We reserve 5% of the entered balance in the calculation as a buffer for broker spread; this is a calculation assumption, not a guarantee of actual spread cost.<br><br>
+Referral rewards, if any, are between you and the broker/partner program and are not guaranteed by us; they depend on the referred account being opened and remaining active per that program's own terms. By using this app you acknowledge that you are solely responsible for your own trading decisions and any resulting profit or loss, and that we accept no liability for trading outcomes.
+</div>
+<button class="btnGold" onclick="toggleReferral()" style="background:#22c55e;color:#000;margin-top:10px">Open Referral Center</button>
+<div id="referralForm" class="hidden" style="margin-top:12px;background:#020b1a;border:1px solid #1e3a5f;border-radius:10px;padding:12px;text-align:left">
+<label>MY HEADWAY LINK (from SAME account under TMFX)</label><input id="myHeadway" type="text" placeholder="Paste Headway link here">
+<label style="margin-top:8px">MY EXNESS LINK (from SAME account under TMFX)</label><input id="myExness" type="text" placeholder="Paste Exness link here">
+<label style="display:flex;gap:8px;align-items:start;margin-top:12px;background:#000;padding:10px;border-radius:6px;border:2px solid #fbbf24">
+<input type="checkbox" id="confirmSameAccount" style="width:18px;height:18px;margin-top:2px">
+<span style="font-size:10px;color:#fbbf24;line-height:1.4;font-weight:900">I confirm this partner link is from the same account I registered under the TMFX link.</span>
+</label>
+<button class="btnGreen" onclick="saveReferralLinks()">💾 SAVE MY LINKS</button>
+<div id="saveStatus" style="text-align:center;font-size:10px;color:#22c55e;margin-top:6px;font-weight:900"></div>
+<div id="sendBox" class="hidden" style="margin-top:12px;text-align:center">
+<button class="btnWhats" onclick="shareReferralTrial()">📤 SEND TO YOUR FRIEND</button>
+<div style="font-size:9px;color:#7aa3c7;margin-top:6px">Message hidden in calculator - friend receives full message</div>
+</div>
+</div>
+</div>
+
+<script>
+function idsHide(ids){ids.forEach(id=>document.getElementById(id).classList.add('hidden'));}
+function idsShow(ids){ids.forEach(id=>document.getElementById(id).classList.remove('hidden'));}
+
+function showHLCBox(){
+idsHide(['box1']); document.getElementById('box2').classList.remove('hidden');
+document.getElementById('box2').scrollIntoView({behavior:'smooth'});
+}
+function backToBox0(){
+idsHide(['box1','box2','box3','box4','box6','box7']);
+document.getElementById('box0').classList.remove('hidden');
+window.scrollTo({top:0,behavior:'smooth'});
+}
+function backToBox1(){
+idsHide(['box2','box3','box4','box6']);
+document.getElementById('box1').classList.remove('hidden');
+document.getElementById('box1').scrollIntoView({behavior:'smooth'});
+}
+function backToBox3(){
+idsHide(['box4','box6']);
+document.getElementById('box3').classList.remove('hidden');
+document.getElementById('box3').scrollIntoView({behavior:'smooth'});
+}
+
+function toggleReferral(){
+document.getElementById('referralForm').classList.toggle('hidden'); loadReferralLinks();
+}
+function loadReferralLinks(){
+myHeadway.value=localStorage.getItem('tmfx_my_headway')||'';
+myExness.value=localStorage.getItem('tmfx_my_exness')||'';
+confirmSameAccount.checked=(localStorage.getItem('tmfx_confirm_same')||'')==='yes';
+}
+function saveReferralLinks(){
+let h=myHeadway.value.trim(),e=myExness.value.trim();
+if(!h&&!e){alert('Paste your partner link from SAME account');return;}
+if(!confirmSameAccount.checked){alert('Tick checkbox: SAME account');return;}
+localStorage.setItem('tmfx_my_headway',h);localStorage.setItem('tmfx_my_exness',e);localStorage.setItem('tmfx_confirm_same','yes');
+saveStatus.innerText='✅ SAVED! NOW YOU CAN SEND';sendBox.classList.remove('hidden');
+}
+function shareReferralTrial(){
+let h=localStorage.getItem('tmfx_my_headway')||'',e=localStorage.getItem('tmfx_my_exness')||'';
+let link='https://themultiplierfx.github.io/Almost3/';
+let msg=`you need to test this super amazing fx calculator. There's almost nothing compared to it at the moment. I assure you, you will like it
+
+${link}
+
+To get FULL Version FREE, kindly use my referral link below to register so that you can access the full version for free.
+
+✅ Headway: ${h}
+✅ Exness: ${e}
+
+Kindly note that the account must be active before ID can be sent.
+
+After you have registered, send me screenshot + your desired Trader ID.`;
+window.open('https://api.whatsapp.com/send?text='+encodeURIComponent(msg),'_blank');
+}
+
+function togglePass(){let x=traderId;x.type=x.type==='password'?'text':'password';}
+function unlockNowSimple(){
+let id=traderId.value.trim().toLowerCase();
+if(!agreeTerms.checked){vipStatus.innerText='❌ Please tick the box to agree to the terms above';vipStatus.style.color='#dc2626';return;}
+if(!id){vipStatus.innerText='❌ Type ID';vipStatus.style.color='#dc2626';return;}
+if(id.length>=2){localStorage.setItem('tmfx_vip_saved','yes');localStorage.setItem('tmfx_vip_id',id);localStorage.setItem('tmfx_terms_agreed',new Date().toISOString());traderId.value='';doUnlock();}
+else{vipStatus.innerText='❌ Too short';}
+}
+function hideFirstPage(){
+idsHide(['box0','referralFooter','disclaimerFooter','signatureFront']);
+}
+function doUnlock(){
+hideFirstPage();idsShow(['box1']);idsHide(['box2','box3','box4','box6','box7']);
+setTimeout(()=>{autoFillAPI(pairD.value);fetchCoreMajors();},300);
+}
+function showFirstPage(){
+mainCard.classList.remove('hidden');signatureFront.classList.remove('hidden');box0.classList.remove('hidden');
+idsHide(['box1','box2','box3','box4','box6','box7']);
+referralFooter.classList.remove('hidden');disclaimerFooter.classList.remove('hidden');
+window.scrollTo({top:0,behavior:'smooth'});
+}
+function doReset(){
+showFirstPage();
+dh.value=dl.value=dc.value=wh.value=wl.value=wc.value=cpD.value=slD.value=tpD.value=balInput.value='';
+balType.value='';balShow.innerText='⚠️ Enter balance';tradeInfoBox.classList.add('hidden');
+}
+function logoutDevice(){
+if(!confirm('Logout? Hide calculator and return to first page?'))return;
+localStorage.removeItem('tmfx_vip_saved');localStorage.removeItem('tmfx_vip_id');traderId.value='';
+referralForm.classList.add('hidden');sendBox.classList.add('hidden');saveStatus.innerText='';showFirstPage();
+}
+
+window.addEventListener('load',function(){
+loadReferralLinks();
+traderId.addEventListener('keypress',e=>{if(e.key==='Enter')unlockNowSimple();});
+if(localStorage.getItem('tmfx_vip_saved')==='yes'){
+hideFirstPage();box1.classList.remove('hidden');idsHide(['box2','box3','box4','box6','box7']);
+setTimeout(()=>{autoFillAPI(pairD.value);fetchCoreMajors();},300);
+}else{
+showFirstPage();
+}
+});
+
+let priceCache=JSON.parse(localStorage.getItem('tmfx_price_cache')||'{}'),currentAbort=null;
+let coreRates={USDCHF:.88,USDCAD:1.36,AUDUSD:.66,NZDUSD:.61,GBPUSD:1.27,USDJPY:149.5};
+
+function selectPair(p){
+pairD.value=p;pName.innerText=p;apiStatus.innerText='Loading '+p+'...';apiStatus.style.background='#1a1500';apiStatus.style.color='#fbbf24';
+if(priceCache[p]&&(Date.now()-priceCache[p].time<120000)){applyMarketCache(priceCache[p],p);apiStatus.innerText='● CACHED: '+p+' @ '+priceCache[p].cp;apiStatus.style.background='#052e16';apiStatus.style.color='#22c55e';}
+if(modeD.value==='auto')autoFillAPI(p);
+}
+function applyMarketCache(c,p){dh.value=c.dh;dl.value=c.dl;dc.value=c.dc;wh.value=c.wh;wl.value=c.wl;wc.value=c.wc;cpD.value=c.cp;calcDaily();calcWeekly();}
+function getX(p){
+p=p.toUpperCase();
+if(['GOLD','XAUUSD','XAGUSD','SILVER'].includes(p))return 100;
+if(['BTCUSD','ETHUSD','SOLUSD'].includes(p))return 1;
+let q=p.slice(3,6);
+if(q==='USD')return 100000;if(q==='CAD')return 100000/(coreRates.USDCAD||1.36);if(q==='CHF')return 100000/(coreRates.USDCHF||.88);
+if(q==='AUD')return 100000*(coreRates.AUDUSD||.66);if(q==='NZD')return 100000*(coreRates.NZDUSD||.61);if(q==='GBP')return 100000*(coreRates.GBPUSD||1.27);
+if(q==='JPY')return 100000/(coreRates.USDJPY||149.5);if(p.includes('JPY'))return 1000;return 100000;
+}
+function priceDecimals(p){
+p=p.toUpperCase();if(p.includes('JPY'))return 3;
+if(['GOLD','XAUUSD','XAGUSD','SILVER','XPDUSD','XPTUSD','BTCUSD','ETHUSD','SOLUSD'].includes(p))return 2;
+return 5;
+}
+function levels(H,L,C){
+if(!H||!L||!C)return null;let P=(H+L+C)/3;
+return{R5:H+4*(P-L),R4:H+3*(P-L),R3:H+2*(P-L),R2:P+(H-L),R1:2*P-L,P:P,S1:2*P-H,S2:P-(H-L),S3:L-2*(H-P),S4:L-3*(H-P),S5:L-4*(H-P)};
+}
+let balDollar=0,balCent=0;
+function calcBalance(){
+let v=+balInput.value||0,t=balType.value;
+if(!t||!v){balShow.innerText='⚠️ Enter balance';return false;}
+if(t==='dollar'){balDollar=v;balCent=v*100}else{balCent=v;balDollar=v/100}
+balShow.innerHTML=`Balance: $${balDollar.toFixed(2)} | ${balCent.toFixed(2)}¢ (95% usable, 5% reserved for spread)`;
+balShow.style.color='#fbbf24';pName.innerText=pairD.value;balD.innerText='$'+balDollar.toFixed(2);balC.innerText=balCent.toFixed(2)+'¢';return true;
+}
+function calcDaily(){let o=levels(+dh.value,+dl.value,+dc.value);if(!o)return;let d=priceDecimals(pairD.value);['R5','R4','R3','R2','R1','P','S1','S2','S3','S4','S5'].forEach(k=>document.getElementById('d'+k).innerText=o[k].toFixed(d));}
+function calcWeekly(){let o=levels(+wh.value,+wl.value,+wc.value);if(!o)return;let d=priceDecimals(pairD.value);['R5','R4','R3','R2','R1','P','S1','S2','S3','S4','S5'].forEach(k=>document.getElementById('w'+k).innerText=o[k].toFixed(d));}
+
+function calcHLCOnly(){
+if(!dh.value||!dl.value||!dc.value||!wh.value||!wl.value||!wc.value){alert('Fill Daily and Weekly HLC first');return;}
+calcDaily();calcWeekly();idsHide(['box1','box2','box4','box6']);box3.classList.remove('hidden');box4.classList.remove('hidden');
+box3.scrollIntoView({behavior:'smooth'});
+}
+function changeMode(){
+if(modeD.value==='manual'){apiStatus.innerText='● MANUAL';apiStatus.style.color='#fbbf24';apiStatus.style.background='#1a1500';}
+else{apiStatus.innerText='● AUTO ⚡';apiStatus.style.color='#22c55e';apiStatus.style.background='#052e16';autoFillAPI(pairD.value);fetchCoreMajors();}
+}
+
+const SPREAD_RESERVE_PCT=0.05;
+function calcLot(){
+calcBalance();let X=getX(pairD.value),cp=+cpD.value,sl=+slD.value,tp=+tpD.value;
+if(!cp||!sl||!tp){alert('Fill Current, SL, TP');return false;}
+let YD=Math.abs(cp-sl)*X,ZD=Math.abs(cp-tp)*X;
+let reserveD=balDollar*SPREAD_RESERVE_PCT,reserveC=balCent*SPREAD_RESERVE_PCT;
+let usableD=balDollar-reserveD,usableC=balCent-reserveC;
+let lD=YD>0?Math.floor(usableD/YD*100)/100:0,lC=YD>0?Math.floor(usableC/YD*100)/100:0;
+appD.innerText='$'+reserveD.toFixed(2);appC.innerText=reserveC.toFixed(2)+'¢';
+lotD.innerText=lD.toFixed(2);lotC.innerText=lC.toFixed(2);profD.innerText=(lD*ZD).toFixed(2);profC.innerText=(lC*ZD).toFixed(2);
+totD.innerText=(balDollar+lD*ZD).toFixed(2);totC.innerText=(balCent+lC*ZD).toFixed(2);return true;
+}
+function doCalculate(){
+if(!cpD.value){alert('Enter Current Price');cpD.focus();return;}
+if(!slD.value){alert('Enter SL');slD.focus();return;}
+if(!tpD.value){alert('Enter TP');tpD.focus();return;}
+if(!balType.value){alert('Select $ or ¢');balType.focus();return;}
+if(!balInput.value){alert('Enter Balance');balInput.focus();return;}
+calcDaily();calcWeekly();if(!calcLot())return;
+let pair=pairD.value.toUpperCase(),curr=parseFloat(cpD.value),dec=priceDecimals(pair);
+tradeInfoBox.innerHTML=`<div>📊 ${pair} | ${curr.toFixed(dec)}</div><div style="color:#fca5a5">SL: ${slD.value} | <span style="color:#86efac">TP: ${tpD.value}</span></div><div style="color:#22c55e;font-size:10px">Balance: $${balDollar.toFixed(2)} | 5% reserved for spread | TOTAL: 100% Bal + Profit</div>`;
+tradeInfoBox.classList.remove('hidden');idsHide(['box1','box2','box4']);box3.classList.remove('hidden');box6.classList.remove('hidden');box6.scrollIntoView({behavior:'smooth'});
+}
+
+function saveAndShowOnlyHistory(){
+let pair=pairD.value,cp=cpD.value,lotDv=lotD.innerText;
+if(!pair||!cp||lotDv==='-'||!lotDv){alert('Calculate first');return;}
+let trade={id:Date.now(),pair,cp,sl:slD.value,tp:tpD.value,bal:balInput.value,type:balType.value,lotD:lotDv,lotC:lotC.innerText,profD:profD.innerText,profC:profC.innerText,totD:totD.innerText,totC:totC.innerText,balD:balD.innerText,balC:balC.innerText,date:new Date().toLocaleString(),dLevels:{},wLevels:{}};
+['R5','R4','R3','R2','R1','P','S1','S2','S3','S4','S5'].forEach(k=>{trade.dLevels[k]=document.getElementById('d'+k).innerText;trade.wLevels[k]=document.getElementById('w'+k).innerText;});
+let hist=JSON.parse(localStorage.getItem('tmfx_history')||'[]');hist.unshift(trade);if(hist.length>30)hist=hist.slice(0,30);
+localStorage.setItem('tmfx_history',JSON.stringify(hist));mainCard.classList.add('hidden');box7.classList.remove('hidden');loadHistory();window.scrollTo({top:0,behavior:'smooth'});
+}
+function backToCalculator(){
+mainCard.classList.remove('hidden');box7.classList.add('hidden');box1.classList.remove('hidden');idsHide(['box0','box2','box3','box4','box6']);
+}
+function loadHistory(){
+let hist=JSON.parse(localStorage.getItem('tmfx_history')||'[]');
+if(!hist.length){historyList.innerHTML='<div style="color:#7aa3c7;font-size:10px;text-align:center;padding:10px">No saved trades</div>';return;}
+historyList.innerHTML=hist.map((h,i)=>`<div class="histItem"><b>${h.pair} | ${h.cp} | ${h.date}</b><span>Balance: $${h.bal} | Lot D:${h.lotD} C:${h.lotC} Profit D:$${h.profD} | TOTAL 100% Bal + Profit: $${h.totD}</span><div class="histBtns"><button style="background:#fbbf24;color:#000" onclick="recallTrade(${i})">RECALL</button><button style="background:#128c7e;color:#fff" onclick="shareSingleWhatsApp(${i})">📱 SHARE</button></div></div>`).join('');
+}
+function recallTrade(i){
+let h=JSON.parse(localStorage.getItem('tmfx_history')||'[]')[i];if(!h)return;
+mainCard.classList.remove('hidden');box7.classList.add('hidden');pairD.value=h.pair;cpD.value=h.cp;slD.value=h.sl;tpD.value=h.tp;balInput.value=h.bal;balType.value=h.type;calcBalance();
+Object.keys(h.dLevels||{}).forEach(k=>document.getElementById('d'+k).innerText=h.dLevels[k]);Object.keys(h.wLevels||{}).forEach(k=>document.getElementById('w'+k).innerText=h.wLevels[k]);
+pName.innerText=h.pair;lotD.innerText=h.lotD;lotC.innerText=h.lotC;profD.innerText=h.profD;profC.innerText=h.profC;totD.innerText=h.totD;totC.innerText=h.totC;balD.innerText=h.balD;balC.innerText=h.balC;appD.innerText='-';appC.innerText='-';
+idsHide(['box0','box1','box2','box4']);box3.classList.remove('hidden');box6.classList.remove('hidden');
+}
+function clearHistoryAndLogout(){if(!confirm('Clear all history?'))return;localStorage.removeItem('tmfx_history');loadHistory();}
+function shareSingleWhatsApp(i){
+let h=JSON.parse(localStorage.getItem('tmfx_history')||'[]')[i];if(!h)return;
+let msg="TMFX SAFE TRADE\nPair: "+h.pair+"\nPrice: "+h.cp+"\nSL: "+h.sl+" TP: "+h.tp+"\nBalance: $"+h.bal+"\nLot D: "+h.lotD+" | TOTAL 100% Bal + Profit: $"+h.totD;
+window.open("https://api.whatsapp.com/send?text="+encodeURIComponent(msg),'_blank');
+}
+
+const API_KEY='cc79b07b3b51480db6fef93dc2220320',API_BASE='https://api.twelvedata.com/',AUTO_TIMEOUT=9000,AUTO_RETRIES=2;
+async function apiJSON(url,attempt=0){
+try{let c=new AbortController(),timer=setTimeout(()=>c.abort(),AUTO_TIMEOUT),r=await fetch(url,{signal:c.signal});clearTimeout(timer);if(!r.ok)throw new Error('HTTP '+r.status);let j=await r.json();if(j.status==='error'||j.code)throw new Error(j.message||'API error');return j;}
+catch(e){if(attempt<AUTO_RETRIES){await new Promise(res=>setTimeout(res,700*(attempt+1)));return apiJSON(url,attempt+1);}throw e;}
+}
+function validNum(v){return Number.isFinite(Number(v));}
+async function fetchCoreMajors(){
+try{let core=['USD/CHF','USD/CAD','AUD/USD','NZD/USD','GBP/USD','USD/JPY'];let results=await Promise.all(core.map(s=>apiJSON(`${API_BASE}price?symbol=${encodeURIComponent(s)}&apikey=${API_KEY}`).catch(()=>null)));results.forEach((j,i)=>{if(j&&j.price)coreRates[core[i].replace('/','')]=+j.price;});}catch(e){}
+}
+async function autoFillAPI(pairOverride){
+let pair=(pairOverride||pairD.value).toUpperCase(),st=apiStatus;if(modeD.value==='manual')return;
+if(currentAbort)currentAbort.abort();currentAbort=new AbortController();
+let cache=priceCache[pair],now=Date.now(),CACHE_MS=120000;
+function setStatus(text,bg,color){st.innerText=text;st.style.background=bg;st.style.color=color;}
+function applyData(dhV,dlV,dcV,whV,wlV,wcV,source){
+if(![dhV,dlV,dcV,whV,wlV,wcV].every(validNum))return false;let dec=priceDecimals(pair);
+dh.value=Number(dhV).toFixed(dec);dl.value=Number(dlV).toFixed(dec);dc.value=Number(dcV).toFixed(dec);wh.value=Number(whV).toFixed(dec);wl.value=Number(wlV).toFixed(dec);wc.value=Number(wcV).toFixed(dec);cpD.value=Number(dcV).toFixed(dec);
+priceCache[pair]={dh:dh.value,dl:dl.value,dc:dc.value,wh:wh.value,wl:wl.value,wc:wc.value,cp:cpD.value,time:now};localStorage.setItem('tmfx_price_cache',JSON.stringify(priceCache));calcDaily();calcWeekly();setStatus(source+' '+pair+' @ '+cpD.value+' ⚡','#052e16','#22c55e');return true;
+}
+function useCached(){if(!cache)return false;let ok=applyData(cache.dh,cache.dl,cache.dc,cache.wh,cache.wl,cache.wc,'● CACHED');if(ok)setStatus('● CACHED: '+pair+' @ '+cpD.value+' ⚡','#1a1500','#fbbf24');return ok;}
+if(cache&&(now-cache.time<CACHE_MS)){if(useCached())return;}
+let sym=pair;if(pair==='GOLD'||pair==='XAUUSD')sym='XAU/USD';else if(pair==='SILVER'||pair==='XAGUSD')sym='XAG/USD';else if(pair.length===6)sym=pair.slice(0,3)+'/'+pair.slice(3,6);
+try{
+setStatus('● AUTO: LOADING '+pair+'...','#1a1500','#fbbf24');
+let dUrl=`${API_BASE}time_series?symbol=${encodeURIComponent(sym)}&interval=1day&apikey=${API_KEY}&outputsize=7`,wUrl=`${API_BASE}time_series?symbol=${encodeURIComponent(sym)}&interval=1week&apikey=${API_KEY}&outputsize=4`;
+let [dR,wR]=await Promise.all([fetch(dUrl,{signal:currentAbort.signal}),fetch(wUrl,{signal:currentAbort.signal})]);
+if(!dR.ok)throw new Error('Daily HTTP '+dR.status);if(!wR.ok)throw new Error('Weekly HTTP '+wR.status);
+let dD=await dR.json(),wD=await wR.json();if(dD.status==='error'||dD.code||dD.message)throw new Error('Daily API: '+(dD.message||'request failed'));if(wD.status==='error'||wD.code||wD.message)throw new Error('Weekly API: '+(wD.message||'request failed'));
+if(!Array.isArray(dD.values)||!dD.values.length)throw new Error('No daily candle data');
+let validDaily=dD.values.filter(v=>validNum(v.high)&&validNum(v.low)&&validNum(v.close));if(!validDaily.length)throw new Error('Invalid daily candle');
+let d=validDaily[0],dHigh=+d.high,dLow=+d.low,dClose=+d.close;if(!(dHigh>dLow)||!validNum(dClose))throw new Error('Invalid daily HLC');
+let weeklyHigh=Math.max(...validDaily.slice(0,5).map(v=>+v.high)),weeklyLow=Math.min(...validDaily.slice(0,5).map(v=>+v.low)),weeklyClose=+validDaily[0].close;
+if(Array.isArray(wD.values)&&wD.values.length){let w=wD.values.find(v=>validNum(v.high)&&validNum(v.low)&&validNum(v.close));if(w){weeklyHigh=Math.max(weeklyHigh,+w.high);weeklyLow=Math.min(weeklyLow,+w.low);}}
+if(!(weeklyHigh>weeklyLow)||!validNum(weeklyClose))throw new Error('Invalid weekly HLC');if(weeklyHigh<dHigh)weeklyHigh=dHigh;if(weeklyLow>dLow)weeklyLow=dLow;
+if(!applyData(dHigh,dLow,dClose,weeklyHigh,weeklyLow,weeklyClose,'● LIVE:'))throw new Error('Data validation failed');
+}catch(e){if(e.name==='AbortError')return;if(useCached())setStatus('● AUTO API ERROR — USING CACHED '+pair+' ⚡','#1a1500','#fbbf24');else setStatus('● AUTO ❌ ERROR — ENTER VALUES MANUALLY','#3f0d0d','#fca5a5');}
+}
+</script>
+</body>
+</html>
